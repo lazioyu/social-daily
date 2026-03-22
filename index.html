@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>社工动态日报 · 2026年3月22日</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f2f5;
+      font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+      color: #333;
+    }
+    .article-wrap { max-width: 680px; margin: 0 auto; background: #fff; }
+
+    /* ── 封面 ── */
+    .cover {
+      background: linear-gradient(150deg, #0f2d52 0%, #0a5c5c 55%, #0d7a3e 100%);
+      padding: 44px 26px 34px;
+      position: relative; overflow: hidden;
+    }
+    .cover::before {
+      content:""; position:absolute; top:-80px; right:-80px;
+      width:300px; height:300px; border-radius:50%;
+      background:rgba(255,255,255,0.04);
+    }
+    .cover-kicker {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9);
+      font-size:11px; letter-spacing:2px; padding:4px 12px;
+      border-radius:20px; margin-bottom:16px;
+    }
+    .cover-kicker span { width:6px; height:6px; border-radius:50%; background:#4dffb0; display:inline-block; }
+    .cover-title { font-size:25px; font-weight:800; color:#fff; line-height:1.4; margin-bottom:8px; }
+    .cover-sub { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.8; }
+    .cover-meta {
+      margin-top:22px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.12);
+      display:flex; align-items:flex-end; justify-content:space-between;
+    }
+    .cover-date-big { font-size:44px; font-weight:800; color:#fff; line-height:1; }
+    .cover-date-text { font-size:12px; color:rgba(255,255,255,0.6); line-height:2; text-align:right; }
+    .cover-badge {
+      position:absolute; top:16px; right:20px;
+      background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+      color:rgba(255,255,255,0.8); font-size:11px; padding:3px 10px; border-radius:4px;
+    }
+
+    /* ── 速览条 ── */
+    .ticker {
+      background:#1a3a5c; color:rgba(255,255,255,0.9);
+      padding:10px 18px; font-size:12.5px; line-height:1.8;
+      border-left:3px solid #4dffb0;
+    }
+    .ticker-label {
+      display:inline-block; background:#4dffb0; color:#0f2d52;
+      font-size:10px; font-weight:700; padding:1px 7px; border-radius:3px;
+      margin-right:8px; vertical-align:middle;
+    }
+
+    /* ── 今日速览 ── */
+    .summary-box {
+      margin:20px 18px; background:#f7f9fc;
+      border-radius:10px; padding:16px 18px;
+      border:1px solid #e8eef5;
+    }
+    .summary-title {
+      font-size:11px; color:#1a3a5c; font-weight:700;
+      letter-spacing:1.5px; margin-bottom:10px;
+      display:flex; align-items:center; gap:6px;
+    }
+    .summary-title::before {
+      content:""; display:block; width:3px; height:14px;
+      background:#0d7a3e; border-radius:2px;
+    }
+    .summary-item {
+      font-size:13px; color:#444; line-height:2;
+      padding-left:16px; position:relative;
+    }
+    .summary-item::before {
+      content:"›"; position:absolute; left:0;
+      color:#0a5c5c; font-weight:700; font-size:14px;
+    }
+    .summary-item strong { color:#1a3a5c; }
+
+    /* ── 正文 ── */
+    .content { padding:0 18px 48px; }
+
+    /* ── 版块标题 ── */
+    .sec-head {
+      display:flex; align-items:center; gap:10px;
+      padding:14px 0 12px; margin-bottom:14px;
+      border-bottom:2px solid #f0f2f5;
+    }
+    .sec-icon {
+      width:34px; height:34px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:17px; flex-shrink:0;
+    }
+    .si-policy   { background:#e6f4ea; }
+    .si-province { background:#e8f0fb; }
+    .si-chengdu  { background:#fff4e5; }
+    .si-analysis { background:#f3e8ff; }
+    .sec-title { font-size:16px; font-weight:700; color:#111; }
+    .sec-tag {
+      margin-left:auto; font-size:11px; color:#888;
+      background:#f5f5f5; padding:2px 9px; border-radius:10px;
+    }
+
+    /* ── 新闻卡片 ── */
+    .card {
+      border:1px solid #eaecef; border-radius:10px;
+      padding:16px; margin-bottom:12px;
+      transition:box-shadow .15s;
+    }
+    .card:hover { box-shadow:0 4px 18px rgba(0,0,0,.07); }
+
+    .card-top {
+      display:flex; align-items:center; gap:7px; margin-bottom:9px;
+      flex-wrap:wrap;
+    }
+    .badge {
+      font-size:11px; font-weight:600; padding:2px 9px;
+      border-radius:4px; flex-shrink:0;
+    }
+    .b-center   { background:#e6f4ea; color:#1a5c30; }
+    .b-beijing  { background:#fff0e6; color:#8a3800; }
+    .b-henan    { background:#fce8e8; color:#8a1a1a; }
+    .b-sichuan  { background:#fff8e6; color:#7a4800; }
+    .b-chengdu  { background:#fff3e0; color:#b04800; }
+    .b-jiangsu  { background:#e8f0fb; color:#0040a0; }
+    .b-new      { background:#fff0f5; color:#a00050; }
+
+    .card-fresh {
+      font-size:10px; color:#fff; background:#e74c3c;
+      padding:1px 6px; border-radius:3px; font-weight:600;
+    }
+    .card-hours {
+      margin-left:auto; font-size:11px; color:#aaa;
+      display:flex; align-items:center; gap:3px;
+    }
+    .card-hours::before { content:"🕐"; font-size:10px; }
+
+    .card-title { font-size:15px; font-weight:700; color:#111; line-height:1.5; margin-bottom:7px; }
+    .card-body  { font-size:13px; color:#555; line-height:1.85; }
+
+    .highlights {
+      background:#f8fafd; border-radius:8px; padding:11px 14px;
+      margin-top:11px; border-left:3px solid #0a5c5c;
+    }
+    .highlights li {
+      list-style:none; font-size:12.5px; color:#444;
+      line-height:1.9; padding-left:14px; position:relative;
+    }
+    .highlights li::before {
+      content:"▸"; position:absolute; left:0;
+      color:#0a5c5c; font-size:10px; top:3px;
+    }
+
+    .card-source {
+      display:flex; align-items:center; gap:6px;
+      margin-top:11px; padding-top:9px;
+      border-top:1px dashed #eee;
+    }
+    .src-link {
+      font-size:11px; color:#0a5c5c;
+      text-decoration:none; word-break:break-all;
+    }
+    .src-link:hover { text-decoration:underline; }
+    .src-date { margin-left:auto; font-size:11px; color:#bbb; flex-shrink:0; }
+
+    /* ── 数据看板 ── */
+    .data-grid {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:10px; margin-bottom:18px;
+    }
+    .data-cell {
+      background:#f7f9fc; border-radius:10px;
+      padding:14px 10px; text-align:center;
+      border:1px solid #e8eef5;
+    }
+    .data-num { font-size:22px; font-weight:800; color:#0a5c5c; line-height:1; }
+    .data-unit { font-size:11px; color:#aaa; margin-top:1px; }
+    .data-label { font-size:11.5px; color:#555; margin-top:5px; line-height:1.4; }
+
+    /* ── 趋势分析 ── */
+    .analysis-card {
+      background:linear-gradient(135deg,#f0f4ff 0%,#f3e8ff 100%);
+      border-radius:12px; padding:18px; margin-bottom:14px;
+    }
+    .analysis-card h4 {
+      font-size:14px; color:#2d1a5c; margin-bottom:12px;
+      display:flex; align-items:center; gap:6px;
+    }
+    .trend-row {
+      display:flex; gap:12px; margin-bottom:14px; align-items:flex-start;
+    }
+    .t-num {
+      width:24px; height:24px; border-radius:50%;
+      background:#0f2d52; color:#fff; font-size:11px; font-weight:700;
+      display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+    .t-body strong { display:block; font-size:13.5px; color:#111; margin-bottom:3px; }
+    .t-body p      { font-size:12.5px; color:#555; line-height:1.75; }
+
+    /* ── 成都决策框 ── */
+    .tip-box {
+      background:linear-gradient(135deg,#fff9f0 0%,#fff3e0 100%);
+      border:1px solid #ffc76e; border-radius:10px; padding:16px;
+      margin-bottom:14px;
+    }
+    .tip-box-head {
+      display:flex; align-items:center; gap:8px; margin-bottom:10px;
+    }
+    .tip-tag {
+      background:#f39c12; color:#fff;
+      font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px;
+    }
+    .tip-box-title { font-size:14px; font-weight:700; color:#5c3000; }
+    .tip-box p {
+      font-size:12.5px; color:#555; line-height:1.85; margin-bottom:6px;
+    }
+    .tip-box p:last-child { margin-bottom:0; }
+
+    /* ── 底部 ── */
+    .footer {
+      background:#0f2d52; color:rgba(255,255,255,.65);
+      padding:22px 18px; font-size:12px; line-height:2;
+    }
+    .footer strong { color:rgba(255,255,255,.9); }
+    .tag-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+    .ftag {
+      background:rgba(255,255,255,.1); color:rgba(255,255,255,.7);
+      font-size:11px; padding:2px 9px; border-radius:12px;
+    }
+    .disclaimer {
+      margin-top:14px; padding-top:12px;
+      border-top:1px solid rgba(255,255,255,.1);
+      font-size:10.5px; color:rgba(255,255,255,.35);
+      line-height:1.8;
+    }
+  </style>
+</head>
+<body>
+<div class="article-wrap">
+
+  <!-- 封面 -->
+  <div class="cover">
+    <div class="cover-badge">No.002 · 每日08:00更新</div>
+    <div class="cover-kicker"><span></span> LIVE · 今日实时动态</div>
+    <div class="cover-title">全国党委社会工作部<br>工作动态日报</div>
+    <div class="cover-sub">聚焦48小时内权威资讯 · 溯源发布 · 供成都决策者参考</div>
+    <div class="cover-meta">
+      <div class="cover-date-big">22</div>
+      <div class="cover-date-text">
+        2026年3月 · 星期日<br>
+        覆盖 3月20日—22日动态<br>
+        整理：余二哥智能助理
+      </div>
+    </div>
+  </div>
+
+  <!-- 速报条 -->
+  <div class="ticker">
+    <span class="ticker-label">48H速报</span>
+    北京发布《新就业群体社会工作服务指引》&nbsp;·&nbsp;河南启动两办《意见》学习宣传周&nbsp;·&nbsp;四川社工宣传周收官&nbsp;·&nbsp;成都区县动态半月速览第15期发布
+  </div>
+
+  <!-- 今日速览 -->
+  <div class="summary-box">
+    <div class="summary-title">今日速览 · 5条核心动态</div>
+    <div class="summary-item"><strong>【北京·3月19日】</strong>社工宣传周发布全国首份《新就业群体社会工作服务指引（试行）》，覆盖8类从业人员</div>
+    <div class="summary-item"><strong>【河南·3月20日】</strong>率先启动两办《意见》系列学习宣传活动，省市县三级联动专题座谈</div>
+    <div class="summary-item"><strong>【四川·3月18日】</strong>社工宣传周收官：11.82万持证社工、6000余个服务阵地、8所高校签约</div>
+    <div class="summary-item"><strong>【成都·3月14日~近期】</strong>区县动态半月速览第15期发布，读书班部署"十五五"开局</div>
+    <div class="summary-item"><strong>【中央·持续推进】</strong>两办《意见》全文刊发《求是》杂志第11期，各地贯彻落实进入行动期</div>
+  </div>
+
+  <div class="content">
+
+    <!-- ① 顶层政策 -->
+    <div class="sec-head">
+      <div class="sec-icon si-policy">📄</div>
+      <div class="sec-title">一、顶层政策动态</div>
+      <div class="sec-tag">中央层面</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-center">中央</span>
+        <span class="card-fresh">全文刊发</span>
+        <span class="card-hours">3月20日 · 2天前</span>
+      </div>
+      <div class="card-title">两办《意见》全文刊登《求是》2026年第11期，各地进入贯彻落实行动期</div>
+      <div class="card-body">
+        中共中央办公厅、国务院办公厅《关于推进社会工作专业人员队伍建设的意见》（2026年3月1日）全文已于3月20日刊发于《求是》杂志及党建网，标志着这份"首份中央社工人才专项文件"正式进入全党学习传达阶段。多省市社工部门随即启动学习宣传行动。
+      </div>
+      <div class="highlights">
+        <li><strong>文件结构</strong>：共6部分11条措施，涵盖培养、使用、评价、激励全链条</li>
+        <li><strong>核心目标</strong>：建设一支"听党话、本领强、有情怀"的专业社工队伍</li>
+        <li><strong>基层导向</strong>：鼓励向农村、中西部、边疆地区流动，开发新领域岗位</li>
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="http://www.dangjian.cn/xxhywx/2026/03/20/detail_202603207830435.html" target="_blank">🔗 来源：党建网 · 求是杂志第11期全文</a>
+        <span class="src-date">2026-03-20</span>
+      </div>
+    </div>
+
+    <!-- ② 重点省市 -->
+    <div class="sec-head">
+      <div class="sec-icon si-province">🗺️</div>
+      <div class="sec-title">二、重点省市工作动态</div>
+      <div class="sec-tag">48小时内 · 4省市</div>
+    </div>
+
+    <!-- 北京 -->
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-beijing">北京市</span>
+        <span class="card-fresh">重磅发布</span>
+        <span class="card-hours">3月19日 · 3天前</span>
+      </div>
+      <div class="card-title">全国首份《新就业群体社会工作服务指引（试行）》发布，8类从业人员纳入专业服务</div>
+      <div class="card-body">
+        3月17日"北京社会工作服务宣传周"启动仪式上，北京市委社会工作部正式发布《新就业群体社会工作服务指引（试行）》，这是全国范围内首份针对新就业群体的专业社工服务规范文件。同步发布《北京市社会工作专业实习实践基地建设指导细则》，并为21名2025年新取得高级社工师资格的专业人员颁发证书。
+      </div>
+      <div class="highlights">
+        <li><strong>覆盖8类从业人员</strong>：网约配送员、快递员、网约车司机、长途货运司机、网约同城货运司机、网约家政员、网络主播、网络作家</li>
+        <li><strong>四维服务</strong>：权益保障（法律援助） / 职业发展（技能培训） / 生活支持（子女托管） / 社会融入（志愿服务参与）</li>
+        <li><strong>北京现状</strong>：全市社工专业人员8.8万人，持证7.8万人，服务机构970余家，高级社工师63名</li>
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="https://www.zyshgzb.gov.cn/n1/2026/0319/c459403-40684919.html" target="_blank">🔗 来源：中共中央社会工作部官网转载（北京社会工作）</a>
+        <span class="src-date">2026-03-19</span>
+      </div>
+    </div>
+
+    <!-- 河南 -->
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-henan">河南省</span>
+        <span class="card-fresh">最新</span>
+        <span class="card-hours">3月20日 · 2天前</span>
+      </div>
+      <div class="card-title">率先启动两办《意见》系列学习宣传，省市县三级社工系统联动专题座谈</div>
+      <div class="card-body">
+        3月20日，中共中央社会工作部官网刊发《河南开展系列活动深入学习宣传〈关于推进社会工作专业人员队伍建设的意见〉》，河南省委社会工作部已率先行动，组织市县社工系统干部、高校专家、一线机构代表分批召开专题座谈。
+      </div>
+      <div class="highlights">
+        <li>坦承短板：队伍结构不合理、专业能力待提升、岗位设置不规范、激励机制不完善</li>
+        <li>工作路径：发挥省市县三级协调机制，扩岗位规模、提升素质、完善四大机制</li>
+        <li>河南成为<strong>全国最快启动《意见》学习宣传</strong>的省份之一，具有标杆意义</li>
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="https://www.zyshgzb.gov.cn/n1/2026/0320/c459403-40685778.html" target="_blank">🔗 来源：中共中央社会工作部官网（河南社会工作）</a>
+        <span class="src-date">2026-03-20</span>
+      </div>
+    </div>
+
+    <!-- 四川 -->
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-sichuan">四川省</span>
+        <span class="card-hours">3月18日 · 4天前</span>
+      </div>
+      <div class="card-title">社工宣传周收官：持证社工11.82万全国前列，8所高校战略签约</div>
+      <div class="card-body">
+        2026年四川省社会工作宣传周（主场成都锦江区）于3月17-18日举行并圆满收官。活动以"盼达的一生"为主题IP，展示社工全龄段服务体系，四川省委社会工作部联合省内8所高校正式签署战略合作协议，构建"学研用"协同机制。
+      </div>
+      <div class="highlights">
+        <li>持证社工<strong>11.82万人</strong>（较2020年增长近4倍），全国前列</li>
+        <li>三级服务阵地累计建成<strong>6000余个</strong>，医务/信访/精神康复多领域试点同步推进</li>
+        <li>联合签约高校：西南财经大学、西南石油大学、西华大学等8所</li>
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="https://www.sc.chinanews.com.cn/scxw/2026-03-18/241852.html" target="_blank">🔗 来源：中国新闻网·四川新闻</a>
+        <span class="src-date">2026-03-18</span>
+      </div>
+    </div>
+
+    <!-- 江苏 -->
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-jiangsu">江苏省</span>
+        <span class="card-hours">3月19日 · 3天前</span>
+      </div>
+      <div class="card-title">"专业社工+志愿服务"融合试点正式扩面：2026年覆盖全省442个社区</div>
+      <div class="card-body">
+        3月13日江苏省委社会工作部举办的扩面增效培训成果已于3月19日全文刊发，确认2026年融合试点社区由初期规模正式扩展至<strong>442个</strong>，引入第三方专业评估机构（苏州乐仁乐助公益发展与评估中心）强化绩效问责，苏州、镇江作为先行市分享市域推进经验。
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="http://shgz.nanjing.gov.cn/gzdt/ywjx/202603/t20260320_5809023.html" target="_blank">🔗 来源：南京社会工作官网</a>
+        <span class="src-date">2026-03-19</span>
+      </div>
+    </div>
+
+    <!-- ③ 成都专项 -->
+    <div class="sec-head">
+      <div class="sec-icon si-chengdu">🏙️</div>
+      <div class="sec-title">三、成都专项关注</div>
+      <div class="sec-tag">决策参考</div>
+    </div>
+
+    <div class="card">
+      <div class="card-top">
+        <span class="badge b-chengdu">成都市</span>
+        <span class="card-hours">3月14日~近期</span>
+      </div>
+      <div class="card-title">成都市委社工部：读书班部署"十五五"开局 · 区县动态第15期发布 · 智慧治理场景落地</div>
+      <div class="card-body">
+        据成都市委社会工作部官网最新更新，近期工作呈现三条主线并进态势：
+      </div>
+      <div class="highlights">
+        <li>📌 <strong>政治引领</strong>：市委部长甘立军在市厅级读书班表态"认真学习贯彻读书班精神，砥砺实干开创社会工作新局面"，推动"十五五"良好开局</li>
+        <li>📌 <strong>区县动态</strong>：发布"成都区（市）县社会工作动态·半月速览（第15期）"，持续跟踪基层执行情况</li>
+        <li>📌 <strong>智慧治理</strong>："蓉社智治"场景在成华区、温江区加速落地，"报表通"平台提升治理效率</li>
+        <li>📌 <strong>新就业群体</strong>："彩领之家"为京东小哥等新就业群体提供住房保障，走在全国前列</li>
+      </div>
+      <div class="card-source">
+        <a class="src-link" href="https://www.cdswshgzb.gov.cn/" target="_blank">🔗 来源：中共成都市委社会工作部官网</a>
+        <span class="src-date">2026-03-22</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <div class="tip-box-head">
+        <span class="tip-tag">⚡ 决策提示</span>
+        <span class="tip-box-title">本期对成都最有参考价值的3件事</span>
+      </div>
+      <p>① <strong>北京"新就业群体服务指引"值得借鉴</strong>：成都已有"彩领之家"住房保障实践，可在北京指引框架基础上，率先出台成都版"新就业群体社会工作服务规范"，形成可推广的西部样本。</p>
+      <p>② <strong>河南学习宣传动作最快，成都应跟上节奏</strong>：两办《意见》3月14日答记者问、3月20日《求是》刊发，河南已启动省市县三级座谈。成都作为西部中心城市，尽快启动本地学习宣传并研究地方配套举措，时间窗口不等人。</p>
+      <p>③ <strong>四川校地合作已打通，成都高校资源可直接对接</strong>：四川省委社工部与8所高校签约，成都理工大学等已参与其中，区（市）县层面可顺势推动高校社工实习实践基地建设，壮大本地专业人才池。</p>
+    </div>
+
+    <!-- ④ 趋势分析 -->
+    <div class="sec-head">
+      <div class="sec-icon si-analysis">📊</div>
+      <div class="sec-title">四、趋势分析与盘点</div>
+      <div class="sec-tag">编辑观察</div>
+    </div>
+
+    <div class="data-grid">
+      <div class="data-cell">
+        <div class="data-num">48h</div>
+        <div class="data-unit">内核心动态</div>
+        <div class="data-label">北京·河南·四川·江苏 4省市同步推进</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-num">8.8<span style="font-size:14px">万</span></div>
+        <div class="data-unit">北京社工</div>
+        <div class="data-label">高级社工师63名，服务机构970余家</div>
+      </div>
+      <div class="data-cell">
+        <div class="data-num">442</div>
+        <div class="data-unit">个社区</div>
+        <div class="data-label">江苏"专业社工+志愿"融合试点规模</div>
+      </div>
+    </div>
+
+    <div class="analysis-card">
+      <h4>🔍 本期三大信号</h4>
+
+      <div class="trend-row">
+        <div class="t-num">1</div>
+        <div class="t-body">
+          <strong>《意见》贯彻进入"比拼期"——谁先出地方配套，谁就占领高地</strong>
+          <p>两办《意见》3月1日印发，3月14日中央社工部答记者问，3月20日《求是》全文刊发，多省已进入专题学习动员阶段。接下来2-3周是地方出台实施细则的黄金窗口。率先落地的省市将在全国社工工作考核评比中取得先手优势。</p>
+        </div>
+      </div>
+
+      <div class="trend-row">
+        <div class="t-num">2</div>
+        <div class="t-body">
+          <strong>新就业群体成为社工服务新蓝海，北京已率先立规</strong>
+          <p>北京《新就业群体社会工作服务指引》是全国首份，意味着这一服务领域正式从实践探索走向规范化。快递员、网约车司机、网络主播等8类人群纳入专业服务框架，既是回应习近平总书记关于"新就业群体要管理服务跟上"的重要指示，也预示着全国层面的类似指引即将跟进。</p>
+        </div>
+      </div>
+
+      <div class="trend-row">
+        <div class="t-num">3</div>
+        <div class="t-body">
+          <strong>"专业社工+志愿服务"融合成为2026年基层治理核心范式</strong>
+          <p>江苏442社区、四川541名社工协同17万人次服务，均印证这一模式的规模化潜力。区别于过去"撒胡椒面"式的志愿活动，这一范式强调专业社工主导设计、志愿者落地执行，通过第三方评估形成闭环。这是本轮基层治理创新的最重要方法论更新。</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer">
+    <strong>📌 社工动态日报</strong> · 每日 08:00 自动更新<br>
+    本期内容覆盖时间范围：<strong>2026年3月20日—22日（48小时内）</strong><br>
+    数据溯源：中共中央社会工作部官网 · 中国政府网 · 求是杂志 · 人民网 · 中国新闻网 · 各省市社工部官网
+    <div class="tag-row">
+      <span class="ftag">#全国社工动态</span>
+      <span class="ftag">#北京社工</span>
+      <span class="ftag">#河南社工</span>
+      <span class="ftag">#四川社工</span>
+      <span class="ftag">#成都治理</span>
+      <span class="ftag">#新就业群体</span>
+      <span class="ftag">#基层治理</span>
+    </div>
+    <div class="disclaimer">
+      ⚠️ 本报告由 AI 智能助理基于公开信息自动整理，已附原始溯源链接，仅供决策参考，重大政策请以官方发布为准。<br>
+      整理：余二哥智能助理 · 2026-03-22 08:00 · 第 No.002 期
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
